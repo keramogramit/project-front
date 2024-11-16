@@ -1,11 +1,34 @@
-<html>
+<html lang="">
 <head>
+
     <title>RPG</title>
     <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
     <link href="/css/my.css" rel="stylesheet">
 </head>
-<body>
+<body onload="listGet()">
 <h1>RPG admin panel</h1>
+<table id="tableDemo">
+    <tr> <th>#</th> <th>Name</th> <th>Title</th> <th>Race</th> <th>Profession</th> <th>Level</th> <th>Birthday</th> <th>Banned</th></tr>
+</table>
+<script>
+    function listGet() {
+        var url = "/rest/players";
+        $.get(url, function(response){
+            $.each(response, function (i, item) {
+                $('<tr>').html("<td>" + item.id + "</td><td>" +
+                    item.name + "</td><td>" +
+                    item.title + "</td><td>" +
+                    item.race + "</td><td>" +
+                    item.profession + "</td><td>" +
+                    new Date(item.birthday).toLocaleDateString() + "</td><td>" +
+                    item.banned + "</td><td>" +
+                    item.level + "</td><td>"
 
+                ).appendTo("#tableDemo")
+            });
+        });
+    }
+</script>
 </body>
+
 </html>
