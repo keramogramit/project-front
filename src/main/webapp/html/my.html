@@ -7,12 +7,20 @@
 </head>
 <body onload="listGet()">
 <h1>RPG admin panel</h1>
+<label for="count_page">Count per page</label>
+<select id="count_page" onload="listGet()">
+    <option value="3">3</option>
+    <option value="3">5</option>
+    <option value="3">7</option>
+    <option value="3">15</option>
+</select>
 <table id="tableDemo">
     <tr> <th>#</th> <th>Name</th> <th>Title</th> <th>Race</th> <th>Profession</th> <th>Level</th> <th>Birthday</th> <th>Banned</th></tr>
 </table>
+<div id="pages">Pages:</div>
 <script>
     function listGet() {
-        var url = "/rest/players";
+        let url = "/rest/players";
         $.get(url, function(response){
             $.each(response, function (i, item) {
                 $('<tr>').html("<td>" + item.id + "</td><td>" +
@@ -20,13 +28,27 @@
                     item.title + "</td><td>" +
                     item.race + "</td><td>" +
                     item.profession + "</td><td>" +
+                    item.level + "</td><td>" +
                     new Date(item.birthday).toLocaleDateString() + "</td><td>" +
-                    item.banned + "</td><td>" +
-                    item.level + "</td><td>"
+                    item.banned + "</td>"
+
 
                 ).appendTo("#tableDemo")
             });
         });
+        let getPages = getPages();
+    }
+    function getPages() {
+        let url = "/rest/players/count";
+        let result = 0;
+        $.ajax({
+            url: url,
+            async: false,
+            success: function (results) {
+                result = parseInt(results);
+            }
+            })
+        return result;
     }
 </script>
 </body>
