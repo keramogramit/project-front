@@ -36,9 +36,22 @@
                 ).appendTo("#tableDemo")
             });
         });
-        let getPages = getPages();
+        let getPages = getsPages();
+        let countPerPage = $("count_page").val();
+
+        if(countPerPage == null){
+            countPerPage = 3;
+        }
+
+        let pagesCount = Math.ceil(getPages / countPerPage);
+
+        for (let i = 0; i < pagesCount; i++) {
+            let buttonName = "<button>" + (i + 1) + "</button>";
+            let button = $(buttonName).attr('id', "pagingButton" + i).attr('onclick', "listGet").addClass('pngButtonStyled');
+            $('#pages').append(button)
+        }
     }
-    function getPages() {
+    function getsPages() {
         let url = "/rest/players/count";
         let result = 0;
         $.ajax({
