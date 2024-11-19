@@ -115,8 +115,27 @@
         tdName.innerHTML = "<input id='inputName" + id +"'type='text' value='" + tdName.innerHTML + "'>";
         let tdTitle = children[2];
         tdTitle.innerHTML = "<input id='inputTitle" + id +"'type='text' value='" + tdTitle.innerHTML + "'>";
+        let tdRace = children[3];
+        let raceId = "#selectRace" + id;
+        let raceCurrentValue = tdRace.innerHTML;
+        tdRace.innerHTML = getDropdownRaceHtml(id);
+        $(raceId).val(raceCurrentValue);
 
     }
+    function getDropdownRaceHtml(id){
+        let raceId = "selectRace" + id;
+        return "<label for='race'></label>" +
+            <select id=" + raceId + " name='race'>" +
+            "<option value='HUMAN'>HUMAN</option>" +
+            "<option value='DWARF'>DWARF</option>" +
+            "<option value='ELF'>ELF</option>" +
+            "<option value='GIANT'>GIANT</option>" +
+            "<option value='ORC'>ORC</option>" +
+            "<option value='TROLL'>TROLL</option>" +
+            "<option value='HOBBIT'>HOBBIT</option>" +
+            </select>;
+    }
+
     function getCurrentPage(){
         let currenPage = 1;
         $('button:parent(div)').each(function (){
