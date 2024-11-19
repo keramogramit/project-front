@@ -5,22 +5,34 @@
     <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
     <link href="/css/my.css" rel="stylesheet">
 </head>
-<body onload="listGet()">
+<body onload="listGet(0)">
 <h1>RPG admin panel</h1>
-<label for="count_page">Count per page</label>
-<select id="count_page" onload="listGet()">
+
+<label for="count_1">Count per page</label>
+<select id="count_1" onchange="listGet(0)">
     <option value="3">3</option>
-    <option value="3">5</option>
-    <option value="3">7</option>
-    <option value="3">15</option>
+    <option value="5">5</option>
+    <option value="7">7</option>
+    <option value="15">15</option>
 </select>
 <table id="tableDemo">
     <tr> <th>#</th> <th>Name</th> <th>Title</th> <th>Race</th> <th>Profession</th> <th>Level</th> <th>Birthday</th> <th>Banned</th></tr>
 </table>
 <div id="pages">Pages:</div>
 <script>
-    function listGet() {
-        let url = "/rest/players";
+    function listGet(page_number) {
+        $("tr:has(td)").remove();
+        let url = "/rest/players?";
+        let countPerPage = $("#count_1").val();
+        if(countPerPage == null){
+            countPerPage = 3;
+        }
+
+        url = url.concat("pageSize=").concat(countPerPage);
+        if(page_number == null){
+            page_number = 0;
+        }
+        url = url.concat("&pageNumber=").concat(page_number);
         $.get(url, function(response){
             $.each(response, function (i, item) {
                 $('<tr>').html("<td>" + item.id + "</td><td>" +
@@ -37,19 +49,21 @@
             });
         });
         let getPages = getsPages();
-        let countPerPage = $("count_page").val();
 
-        if(countPerPage == null){
-            countPerPage = 3;
-        }
 
         let pagesCount = Math.ceil(getPages / countPerPage);
 
+        $("button.pngButtonStyleForDelete").remove();
+
         for (let i = 0; i < pagesCount; i++) {
             let buttonName = "<button>" + (i + 1) + "</button>";
-            let button = $(buttonName).attr('id', "pagingButton" + i).attr('onclick', "listGet").addClass('pngButtonStyled');
-            $('#pages').append(button)
+            let btn = $(buttonName)
+                .attr('id', "pages" + i)
+                .attr('onclick', "listGet(" + i + ")").addClass('pngButtonStyleForDelete');
+            $('#pages').append(btn)
         }
+        let idButton = "#pages" + page_number;
+        $(idButton).css('color', "blue");
     }
     function getsPages() {
         let url = "/rest/players/count";
