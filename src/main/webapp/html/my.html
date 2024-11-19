@@ -109,6 +109,13 @@
         $(idDelete).remove();
         let saveImg = "<img src ='/img/save.png'>";
         $(idEdit).html(saveImg);
+        let currentElement = $(idEdit).parents().parents();
+        let children = currentElement.children();
+        let tdName = children[1];
+        tdName.innerHTML = "<input id='inputName" + id +"'type='text' value='" + tdName.innerHTML + "'>";
+        let tdTitle = children[2];
+        tdTitle.innerHTML = "<input id='inputTitle" + id +"'type='text' value='" + tdTitle.innerHTML + "'>";
+
     }
     function getCurrentPage(){
         let currenPage = 1;
