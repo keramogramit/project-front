@@ -120,6 +120,18 @@
         let raceCurrentValue = tdRace.innerHTML;
         tdRace.innerHTML = getDropdownRaceHtml(id);
         $(raceId).val(raceCurrentValue);
+        let tdProfession = children[4];
+        let professionId = "#selectProfession" + id;
+        let professionCurrentValue = tdProfession.innerHTML;
+        tdProfession.innerHTML = getDropdownProfessionHtml(id);
+        $(professionId).val(professionCurrentValue);
+
+        let tdBanned = children[7];
+        let bannedId = "#selectBanned" + id;
+        let bannedCurrentValue = tdBanned.innerHTML;
+        tdBanned.innerHTML = getDropdownBannedHtml(id);
+        $(bannedId).val(bannedCurrentValue);
+
 
     }
     function getDropdownRaceHtml(id){
@@ -133,6 +145,28 @@
             "<option value='ORC'>ORC</option>" +
             "<option value='TROLL'>TROLL</option>" +
             "<option value='HOBBIT'>HOBBIT</option>" +
+            "</select>";
+    }
+    function getDropdownProfessionHtml(id){
+        let professionId = "selectProfession" + id;
+        return "<label for='profession'></label>" +
+            "<select id=" + professionId + " name='profession'>" +
+            "<option value='WARRIOR'>WARRIOR</option>" +
+            "<option value='ROGUE'>ROGUE</option>" +
+            "<option value='SORCERER'>SORCERER</option>" +
+            "<option value='CLERIC'>CLERIC</option>" +
+            "<option value='PALADIN'>PALADIN</option>" +
+            "<option value='NAZGUL'>NAZGUL</option>" +
+            "<option value='WARLOCK'>WARLOCK</option>" +
+            "<option value='DRUID'>DRUID</option>" +
+            "</select>";
+    }
+    function getDropdownBannedHtml(id){
+        let selectId = "selectBanned" + id;
+        return "<label for='banned'></label>" +
+            "<select id=" + selectId + " name='banned'>" +
+            "<option value='false'>false</option>" +
+            "<option value='true'>true</option>" +
             "</select>";
     }
 
