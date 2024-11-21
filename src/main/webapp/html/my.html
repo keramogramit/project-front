@@ -119,20 +119,44 @@
         let raceId = "#selectRace" + id;
         let raceCurrentValue = tdRace.innerHTML;
         tdRace.innerHTML = getDropdownRaceHtml(id);
-        $(raceId).val(raceCurrentValue);
+        $(raceId).val(raceCurrentValue).change();
         let tdProfession = children[4];
         let professionId = "#selectProfession" + id;
         let professionCurrentValue = tdProfession.innerHTML;
         tdProfession.innerHTML = getDropdownProfessionHtml(id);
-        $(professionId).val(professionCurrentValue);
+        $(professionId).val(professionCurrentValue).change();
 
         let tdBanned = children[7];
         let bannedId = "#selectBanned" + id;
         let bannedCurrentValue = tdBanned.innerHTML;
         tdBanned.innerHTML = getDropdownBannedHtml(id);
-        $(bannedId).val(bannedCurrentValue);
+        $(bannedId).val(bannedCurrentValue).change();
+        let propertySaveTag = "saveAcc(" + id + ")";
+        $(idEdit).attr('onclick', propertySaveTag);
 
-
+    }
+    function saveAcc(id) {
+        let valueName = $("#inputName" + id).val();
+        let valueTitle = $("#inputTitle" + id).val();
+        let valueRace = $("#selectRace" + id).val();
+        let valueProfession = $("#selectProfession" + id).val();
+        let valueBanned = $("#selectBanned" + id).val();
+        let url = "/rest/players/" + id;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            async: false,
+            data: JSON.stringify({"name": valueName,
+            "title": valueTitle,
+            "race": valueRace,
+            "profession": valueProfession,
+            "banned": valueBanned}),
+            success: function (){
+                listGet(getCurrentPage());
+            }
+        });
     }
     function getDropdownRaceHtml(id){
         let raceId = "selectRace" + id;
