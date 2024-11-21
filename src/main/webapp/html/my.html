@@ -99,11 +99,11 @@
                     item.level + "</td><td>" +
                     new Date(item.birthday).toLocaleDateString() + "</td><td>" +
                     item.banned + "</td><td>" +
-                    "<button id = 'button_edit" + item.id + "'onclick='editAcc(" + item.id +")'>" +
-                    "<img src='/img/edit.png'>" +
+                    "<button id = 'button_edit" + item.id + "' onclick='editAcc(" + item.id +")'>" +
+                    "<img src='/img/edit.png' alt=" + "simbolEdit" + ">" +
                     "</button></td><td>" +
-                    "<button id = 'button_delete" + item.id + "'onclick='deleteAcc(" + item.id + ")'>" +
-                    "<img src='/img/delete.png'>" +
+                    "<button id = 'button_delete" + item.id + "' onclick='deleteAcc(" + item.id + ")'>" +
+                    "<img src='/img/delete.png' alt=" + "simbolDelete" + ">" +
                     "</button>"+ "</td>"
 
 
@@ -153,14 +153,14 @@
         let idEdit = "#button_edit" + id;
         let idDelete = "#button_delete" + id;
         $(idDelete).remove();
-        let saveImg = "<img src ='/img/save.png'>";
+        let saveImg = "<img src ='/img/save.png' alt=" + "saveImg" + ">";
         $(idEdit).html(saveImg);
         let currentElement = $(idEdit).parents().parents();
         let children = currentElement.children();
         let tdName = children[1];
-        tdName.innerHTML = "<input id='inputName" + id +"'type='text' value='" + tdName.innerHTML + "'>";
+        tdName.innerHTML = "<input id='inputName" + id +"' type='text' value='" + tdName.innerHTML + "'>";
         let tdTitle = children[2];
-        tdTitle.innerHTML = "<input id='inputTitle" + id +"'type='text' value='" + tdTitle.innerHTML + "'>";
+        tdTitle.innerHTML = "<input id='inputTitle" + id +"' type='text' value='" + tdTitle.innerHTML + "'>";
         let tdRace = children[3];
         let raceId = "#selectRace" + id;
         let raceCurrentValue = tdRace.innerHTML;
@@ -189,7 +189,7 @@
         let valueLevel =$("#inputLevelNew").val();
         let valueBirthday = $("#inputBirthdayNew").val();
         let valueBanned = $("#inputBannedNew").val();
-        let currentPage = window.location.href;
+
         let url = "/rest/players";
         $.ajax({
             url: url,
