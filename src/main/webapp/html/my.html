@@ -72,6 +72,9 @@
     <option value='true'>true</option>
 </select>
 <br>
+<span>
+    <button type="submit" onclick="createAcc()">Save</button>
+</span>
 <script>
     function listGet(page_number) {
         $("tr:has(td)").remove();
@@ -177,6 +180,41 @@
         let propertySaveTag = "saveAcc(" + id + ")";
         $(idEdit).attr('onclick', propertySaveTag);
 
+    }
+    function createAcc(){
+        let valueName = $("#inputNameNew").val();
+        let valueTitle = $("#inputTitleNew").val();
+        let valueRace = $("#inputRaceNew").val();
+        let valueProfession = $("#inputProfessionNew").val();
+        let valueLevel =$("#inputLevelNew").val();
+        let valueBirthday = $("#inputBirthdayNew").val();
+        let valueBanned = $("#inputBannedNew").val();
+        let currentPage = window.location.href;
+        let url = "/rest/players";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            async: false,
+            data: JSON.stringify({"name": valueName,
+                "title": valueTitle,
+                "race": valueRace,
+                "profession": valueProfession,
+                "level": valueLevel,
+                "birthday": new Date(valueBirthday).getTime(),
+                "banned": valueBanned}),
+            success: function (){
+                $("#inputNameNew").val("");
+                $("#inputTitleNew").val("");
+                $("#inputRaceNew").val("");
+                $("#inputProfessionNew").val("");
+                $("#inputLevelNew").val("");
+                $("#inputBirthdayNew").val("");
+                $("#inputBannedNew").val("");
+                listGet(getCurrentPage());
+            }
+        });
     }
     function saveAcc(id) {
         let valueName = $("#inputName" + id).val();
